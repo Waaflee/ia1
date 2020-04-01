@@ -11,6 +11,8 @@ pylint = "*"
 [packages]
 opencv-python = "*"
 numpy = "*"
+matplotlib = "*"
+env = "*"
 
 [requires]
 python_version = "3.8"
