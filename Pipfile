@@ -13,6 +13,7 @@ opencv-python = "*"
 numpy = "*"
 matplotlib = "*"
 env = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.8"
