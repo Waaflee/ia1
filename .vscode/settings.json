@@ -1,3 +1,9 @@
 {
-    "python.pythonPath": "/home/wafle/.local/share/virtualenvs/Inteligencia_Artifical_1-bficcq2n/bin/python"
+    "python.pythonPath": "/home/wafle/.local/share/virtualenvs/Inteligencia_Artifical_1-bficcq2n/bin/python",
+    "cSpell.words": [
+        "RETR",
+        "imread",
+        "imshow",
+        "uint"
+    ]
 }
