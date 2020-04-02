@@ -17,6 +17,7 @@ class KMeans():
     max_iterations = 100
 
     def __init__(self, training_percentage: float, data: str, k: int = 4, model: str = None):
+        # Load requested model form disk if exists
         if model and Path(model).is_file():
             df = pd.read_csv(model)
             self.centroids = df.to_dict('records')
@@ -26,6 +27,7 @@ class KMeans():
             random.shuffle(self.dataset)
             index = int(len(self.dataset) * training_percentage)
             self.test_set = self.dataset[index:]
+        # Train model and save it to disk
         else:
             random.seed()
             self.k = k

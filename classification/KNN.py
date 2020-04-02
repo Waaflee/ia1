@@ -16,7 +16,8 @@ def distance(point_a, point_b):
 class KNN():
     max_iterations = 100
 
-    def __init__(self, training_percentage: float, data: str, model: str = None):
+    def __init__(self, training_percentage: float, data: str, k: int = 4, model: str = None):
+        self.k = k
         if model:
             df = pd.read_csv(model)
             self.centroids = df.to_dict('records')
@@ -36,7 +37,7 @@ class KNN():
             self.test_set = self.dataset[index:]
             self.centroids = self.train()
             df = pd.DataFrame(self.centroids)
-            df.to_csv("models/kmeans.csv")
+            df.to_csv("models/knn.csv")
 
     def train(self) -> List[Dict]:
         pass
