@@ -1,4 +1,6 @@
 dataset/
+models/
+data/
 *.jpg
 
 # Byte-compiled / optimized / DLL files

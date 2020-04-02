@@ -64,5 +64,17 @@ def extract_features(filename: str) -> Dict[str, Union[int, str, float]]:
     return {
         "filename": filename,
         "aspect_ratio": aspect_ratio,
-        "corners": corners
+        "corners": corners/100
     }
+
+
+def main() -> None:
+    test = ["dataset/nails/nail", "dataset/screws/screw",
+            "dataset/washers/washer", "dataset/nuts/nut"]
+    postfix = "_1.jpg"
+    for i in test:
+        print(extract_features(f"{i}{postfix}"))
+
+
+if __name__ == "__main__":
+    main()
