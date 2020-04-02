@@ -42,7 +42,7 @@ class KMeans():
             df.to_csv("models/kmeans.csv")
 
     def train(self) -> List[Dict]:
-        centroids = random.sample(self.train_set, self.k)
+        centroids: List[Dict] = random.sample(self.train_set, self.k)
         for index, i in enumerate(centroids):
             i["centroid"] = index
         acc = 0

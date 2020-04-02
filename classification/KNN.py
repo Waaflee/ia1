@@ -1,10 +1,7 @@
 import random
-import statistics
+from collections import Counter
 from typing import Dict, List, Union
 import pandas as pd
-import numpy as np
-from pathlib import Path
-from collections import Counter
 
 
 def distance(point_a, point_b):
