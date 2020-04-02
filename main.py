@@ -1,5 +1,7 @@
 import pandas as pd
 from matplotlib import pyplot as plt
+from setup import setup
+
 
 data = "data/dataset.csv"
 
@@ -19,4 +21,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    setup()
     main()

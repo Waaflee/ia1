@@ -5,6 +5,8 @@
         "RETR",
         "imread",
         "imshow",
-        "uint"
+        "uint",
+        "xlabel",
+        "ylabel"
     ]
 }

@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from typing import Dict, Union
+from display import display
 
 
 def extract_features(filename: str) -> Dict[str, Union[int, str, float]]:
@@ -8,7 +9,7 @@ def extract_features(filename: str) -> Dict[str, Union[int, str, float]]:
     # Preprocessing
 
     # Denoise
-    # img = cv2.blur(img, (3, 3))
+    img = cv2.blur(img, (1, 1))
 
     # Grayscale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -37,13 +38,14 @@ def extract_features(filename: str) -> Dict[str, Union[int, str, float]]:
     # Convert to Grayscale for corner detection
     base_gray = cv2.cvtColor(base_bgr, cv2.COLOR_BGR2GRAY)
     # Denoise a little bit
-    base_gray = cv2.blur(base_gray, (5, 5))
+    # base_gray = cv2.blur(base_gray, (10, 10))
+    base_gray = cv2.GaussianBlur(base_gray, (5, 5), 0)
     # To float for harris detection algorithm
     base_gray = np.float32(base_gray)
     # Harris corner detections, adjustable parameters
-    dst = cv2.cornerHarris(base_gray, 10, 21, 0.01)
+    dst = cv2.cornerHarris(base_gray, 3, 1, 0.04)
     # Dilating corners, non important
-    dst = cv2.dilate(dst, None)
+    # dst = cv2.dilate(dst, None)
 
     # Threshold to mark corners, adjustable
     base_bgr[dst > 0.1*dst.max()] = [0, 0, 255]
@@ -61,19 +63,48 @@ def extract_features(filename: str) -> Dict[str, Union[int, str, float]]:
     if aspect_ratio < 1:
         aspect_ratio = 1/aspect_ratio
 
+    if debug:
+        # display(filename, base_bgr)
+        return {
+            "filename": filename,
+            "aspect_ratio": aspect_ratio,
+            "corners": corners
+        }, base_bgr
+
     return {
         "filename": filename,
         "aspect_ratio": aspect_ratio,
-        "corners": corners/100
+        "corners": corners
     }
 
 
+debug = False
+
+
 def main() -> None:
+    print("-"*25)
+    print("Processing test: ")
     test = ["dataset/nails/nail", "dataset/screws/screw",
             "dataset/washers/washer", "dataset/nuts/nut"]
-    postfix = "_1.jpg"
+    postfix = ["_1.jpg", "_2.jpg", "_3.jpg"]
+    postfix = ["_1.jpg"]
+    pictures = []
+    data = []
     for i in test:
-        print(extract_features(f"{i}{postfix}"))
+        for j in postfix:
+            if debug:
+                d, i = extract_features(f"{i}{j}")
+                pictures.append(i)
+            else:
+                d = extract_features(f"{i}{j}")
+            data.append(d)
+    image = cv2.hconcat(pictures)
+    for i in data:
+        print(i)
+    if debug:
+        display("Processed set", image)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
