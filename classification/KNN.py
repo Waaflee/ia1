@@ -4,6 +4,7 @@ from typing import Dict, List, Union
 import pandas as pd
 import numpy as np
 from pathlib import Path
+from collections import Counter
 
 
 def distance(point_a, point_b):
@@ -14,30 +15,15 @@ def distance(point_a, point_b):
 
 
 class KNN():
-    max_iterations = 100
-
-    def __init__(self, training_percentage: float, data: str, k: int = 4, model: str = None):
+    def __init__(self, training_percentage: float, data: str, k: int = 3, model: str = None):
         self.k = k
-        if model:
-            df = pd.read_csv(model)
-            self.centroids = df.to_dict('records')
-            random.seed()
-            df = pd.read_csv(data, index_col=0)
-            self.dataset: List[Dict] = df.to_dict('records')
-            random.shuffle(self.dataset)
-            index = int(len(self.dataset) * training_percentage)
-            self.test_set = self.dataset[index:]
-        else:
-            random.seed()
-            df = pd.read_csv(data, index_col=0)
-            self.dataset: List[Dict] = df.to_dict('records')
-            random.shuffle(self.dataset)
-            index = int(len(self.dataset) * training_percentage)
-            self.train_set = self.dataset[:index]
-            self.test_set = self.dataset[index:]
-            self.centroids = self.train()
-            df = pd.DataFrame(self.centroids)
-            df.to_csv("models/knn.csv")
+        random.seed()
+        df = pd.read_csv(data, index_col=0)
+        self.dataset: List[Dict] = df.to_dict('records')
+        random.shuffle(self.dataset)
+        index = int(len(self.dataset) * training_percentage)
+        self.train_set = self.dataset[:index]
+        self.test_set = self.dataset[index:]
 
     def train(self) -> List[Dict]:
         pass
@@ -51,10 +37,17 @@ class KNN():
         return acc / len(self.test_set)
 
     def classify(self, data: Dict[str, Union[str, int, float]]) -> str:
-        pass
+        dataset = self.train_set.copy()
+        for i in dataset:
+            i["distance"] = distance(data, i)
+        dataset = sorted(dataset, key=lambda x: x["distance"])
+        closest_k = dataset[:self.k]
+        closest_k = [i["classification"] for i in closest_k]
+        occurrence_count = Counter(closest_k)
+        return occurrence_count.most_common(1)[0][0]
 
 
 if __name__ == "__main__":
-    knn = KNN(0.35, "data/dataset.csv")
+    knn = KNN(0.4, "data/dataset.csv")
     accuracy = knn.test()
     print("Model Accuracy = ", accuracy)
