@@ -1,0 +1,5 @@
+,filename,aspect_ratio,corners,classification,centroid
+0,dataset/nails/nail_9.jpg,3.208530805687204,1234,nail,0
+1,dataset/washers/washer_28.jpg,1.017088174982912,3246,washer,1
+2,dataset/washers/washer_18.jpg,1.0801963993453354,18227,washer,2
+3,dataset/screws/screw_19.jpg,2.3082614056720097,8240,screw,3
