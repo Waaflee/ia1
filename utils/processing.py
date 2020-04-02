@@ -58,6 +58,8 @@ def extract_features(filename: str) -> Dict[str, Union[int, str, float]]:
     # Getting aspect ratio
     x, y, w, h = cv2.boundingRect(cnt)
     aspect_ratio = float(w)/h
+    if aspect_ratio < 1:
+        aspect_ratio = 1/aspect_ratio
 
     return {
         "filename": filename,

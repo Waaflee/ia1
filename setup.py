@@ -19,7 +19,7 @@ def setup() -> None:
     else:
         df = pd.DataFrame(dataset)
         print(df)
-        df.to_csv("dataset.csv")
+        df.to_csv("data/dataset.csv")
 
 
 if __name__ == "__main__":

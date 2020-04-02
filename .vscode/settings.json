@@ -1,6 +1,7 @@
 {
     "python.pythonPath": "/home/wafle/.local/share/virtualenvs/Inteligencia_Artifical_1-bficcq2n/bin/python",
     "cSpell.words": [
+        "Kmeans",
         "RETR",
         "imread",
         "imshow",
