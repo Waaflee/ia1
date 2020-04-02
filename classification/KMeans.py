@@ -94,6 +94,6 @@ class KMeans():
 
 
 if __name__ == "__main__":
-    km = KMeans(0.65, "data/dataset.csv")
+    km = KMeans(0.45, "data/dataset.csv")
     accuracy = km.test()
     print("Model Accuracy = ", accuracy)

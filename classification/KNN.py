@@ -45,6 +45,6 @@ class KNN():
 
 
 if __name__ == "__main__":
-    knn = KNN(0.4, "data/dataset.csv")
+    knn = KNN(0.45, "data/dataset.csv")
     accuracy = knn.test()
     print("Model Accuracy = ", accuracy)
