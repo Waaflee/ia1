@@ -1,8 +1,9 @@
 import pandas as pd
 from typing import Iterable, List
-from utils.processing import extract_features
+from utils.processing import to_hu_moments as extract_features
 import os
 import multiprocessing
+import numpy as np
 
 prefix: str = "dataset/"
 folders: Iterable[str] = ["nails", "screws", "washers", "nuts"]
@@ -16,11 +17,12 @@ def setup() -> None:
             classification: str = folder[:-1]
             data = pool.map(extract_features, [
                             f"{prefix}{folder}/{image}" for image in images])
-            for i in data:
-                i["classification"] = classification
+            for index, i in enumerate(data):
+                data[index] = np.append(i, classification)
             dataset += data
     else:
-        df = pd.DataFrame(dataset)
+        df = pd.DataFrame(dataset, columns=[
+                          "h0", "h1", "h2", "h3", "h4", "h5", "h6", "label"])
         print(df)
         df.to_csv("data/dataset.csv")
 

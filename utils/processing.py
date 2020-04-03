@@ -52,6 +52,10 @@ def to_hu_moments(filename: str) -> List[float]:
         huMoments[i] = -1 * \
             copysign(1.0, huMoments[i]) * log10(abs(huMoments[i]))
     return huMoments
+    # return huMoments
+
+
+debug = False
 
 
 def main() -> None:
