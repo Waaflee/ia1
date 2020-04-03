@@ -18,8 +18,20 @@ def main() -> None:
     accuracy = km.test()
     print("Model Accuracy = ", accuracy)
     print("-"*25)
-    # df = pd.read_csv(data, index_col=0)
-    # dataset: List[Dict] = df.to_dict('records')
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    df = pd.read_csv(data, index_col=0)
+    dataset: List[Dict] = df.to_dict('records')
+    for i in dataset:
+        ax.scatter(float(i['0']), float(i['1']), float(i['2']), marker='o')
+
+    ax.set_xlabel('H[0]')
+    ax.set_ylabel('H[1]')
+    ax.set_zlabel('H[3]')
+    plt.show()
+
     # print(dataset)
 
     # # Plot the data

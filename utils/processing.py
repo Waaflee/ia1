@@ -14,6 +14,20 @@ def display(name: str, img) -> None:
     cv2.imshow(name, img)
 
 
+def better_features(filename: str) -> List:
+    img = cv2.imread(filename)
+    img = cv2.resize(img, (400, 300))
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    clean = cv2.GaussianBlur(gray, (3, 3), 0)
+    # edge = cv2.Laplacian(clean, cv2.CV_64F)
+    # hm = cv2.HuMoments(cv2.moments(edge)).flatten()
+    hm = cv2.HuMoments(cv2.moments(clean)).flatten()
+    for i in range(0, 7):
+        hm[i] = -1 * \
+            copysign(1.0, hm[i]) * log10(abs(hm[i]))
+    return [hm[0], hm[1], hm[3]]
+
+
 def to_hu_moments(filename: str) -> List[float]:
     im = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
    # Binary Image
@@ -148,12 +162,14 @@ def to_ar_and_corners(filename: str) -> Dict[str, Union[int, str, float]]:
 
 
 def extract_features(filename: str) -> List:
-    hu = to_hu_moments(filename)
-    hu = [hu[0], hu[3]]
-    ar = to_ar_and_corners(filename)
-    # ar = [ar["aspect_ratio"], ar["corners"], ar["corners_deviation"]]
-    ar = [ar["aspect_ratio"], ar["corners_deviation"]]
-    return np.append(hu, ar)
+    # hu = to_hu_moments(filename)
+    # hu = [hu[0], hu[3]]
+    # ar = to_ar_and_corners(filename)
+    # # ar = [ar["aspect_ratio"], ar["corners"], ar["corners_deviation"]]
+    # ar = [ar["corners_deviation"]]
+    return better_features(filename)
+
+    # return np.append(hu, ar)
 
 
 debug = False
