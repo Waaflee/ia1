@@ -1,6 +1,6 @@
 import pandas as pd
 from typing import Iterable, List
-from utils.processing import to_hu_moments as extract_features
+from utils.processing import extract_features
 import os
 import multiprocessing
 import numpy as np
@@ -21,8 +21,9 @@ def setup() -> None:
                 data[index] = np.append(i, classification)
             dataset += data
     else:
-        df = pd.DataFrame(dataset, columns=[
-                          "h0", "h1", "h2", "h3", "h4", "h5", "label"])
+        df = pd.DataFrame(dataset)
+        # df = pd.DataFrame(dataset, columns=[
+        #                   "h0", "h1", "h2", "h3", "h4", "h5", "label"])
         # print(df)
         df.to_csv("data/dataset.csv")
 

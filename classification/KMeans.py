@@ -74,7 +74,6 @@ class KMeans():
                 new_centroids.append(point)
 
             if np.array_equal(np.array(list(centroids)), np.array(list(new_centroids))):
-                print(acc)
                 return centroids
             else:
                 centroids = new_centroids
