@@ -36,7 +36,7 @@ def to_hu_moments(filename: str) -> List[float]:
         cv2.destroyAllWindows()
 
     # im = cv2.GaussianBlur(im, (5, 5), 0)
-    _, im = cv2.threshold(im, 95, 255, cv2.THRESH_BINARY)
+    _, im = cv2.threshold(im, 100, 255, cv2.THRESH_BINARY)
 
     if debug:
         cv2.imshow("binary", im)
@@ -51,7 +51,7 @@ def to_hu_moments(filename: str) -> List[float]:
     for i in range(0, 7):
         huMoments[i] = -1 * \
             copysign(1.0, huMoments[i]) * log10(abs(huMoments[i]))
-    return huMoments
+    return huMoments[:-1]
     # return huMoments
 
 

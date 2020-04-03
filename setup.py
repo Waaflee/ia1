@@ -22,8 +22,8 @@ def setup() -> None:
             dataset += data
     else:
         df = pd.DataFrame(dataset, columns=[
-                          "h0", "h1", "h2", "h3", "h4", "h5", "h6", "label"])
-        print(df)
+                          "h0", "h1", "h2", "h3", "h4", "h5", "label"])
+        # print(df)
         df.to_csv("data/dataset.csv")
 
 
